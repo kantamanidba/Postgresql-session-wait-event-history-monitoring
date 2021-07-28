@@ -1,20 +1,5 @@
 # RDS-Postgresql-session-wait-event-history-monitoring
 
-select backend_start,wait_event_type ,wait_event ,state,query from pg_stat_activity where datname='dbids_prf' 
-and wait_event != 'ClientRead' and usename='prfrmnc_test_user' and wait_event is not null order by wait_event;
-
-select * from pg_stat_activity where 
---datname='dbids_prf' 
-wait_event != 'ClientRead' and usename='prfrmnc_test_user' and wait_event is not null order by wait_event;
-
-select backend_start,wait_event_type ,wait_event ,state,query from pg_stat_activity where datname='dbids_prf' 
-and wait_event != 'ClientRead' and usename='prfrmnc_test_user' and wait_event is not null order by wait_event;
-
-
-select datname,usename,pid,application_name,client_addr,client_port,backend_start,query_start,wait_event_type,wait_event,state 
-from pg_stat_activity where state != 'idle' and wait_event is not null 
-
-
 Postgresql session/wait event history monitoring:
 
 Below is the step by step procedure for session/wait event history monitoring@AWS PostgreSQL RDS.
