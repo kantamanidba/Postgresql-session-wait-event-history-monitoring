@@ -16,11 +16,6 @@ CREATE EXTENSION pg_cron;
 
 Either use the default settings, or schedule jobs to run in other databases within your PostgreSQL DB instance. The pg_cron scheduler is set in the default PostgreSQL database named postgres. The pg_cron objects are created in this postgres database and all scheduling actions run in this database.
 
-To schedule jobs to run in other databases within your PostgreSQL DB instance
-
-
-Now connect to your required database in the instance and then create below objects.
-
 create table, which is going to hold all session details.
 
 ```
