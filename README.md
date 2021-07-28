@@ -73,6 +73,7 @@ SELECT cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 *
 As a user with the rds_superuser role, update the database column for the job that you just created so that it runs in another database within your PostgreSQL DB instance.
 
 ```
+select * from cron.job;
 UPDATE cron.job SET database = 'datase_name' WHERE jobid = job_id;
 ```
 verify job details by below query
@@ -83,7 +84,7 @@ verify failed jobs by below query
 ```
 select * from cron.job_run_details where status = 'failed';
 ```
-verify purging the wait_evnt_mntrg_tbl:
+purging the wait_evnt_mntrg_tbl:
 
 In order to maintain storage consumption low it's better purge the history data weekly/bi-weekly.
 create the below procedure for purging the data.
