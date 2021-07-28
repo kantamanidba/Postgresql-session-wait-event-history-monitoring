@@ -34,7 +34,6 @@ CREATE TABLE public.wait_evnt_mntrg_tbl
 	state                text  NULL ,
 	query                text  NULL 
 );
-
 ```
 create the procedure for capturing the session/wait event details.
 
@@ -42,12 +41,9 @@ create the procedure for capturing the session/wait event details.
 create or replace procedure public.pr_wait_evnt_mntrg()
 LANGUAGE plpgsql
 AS $procedure$
-
 declare
 rec_curs RECORD;
-
 seq_cursor cursor for select datname,usename,pid,application_name,client_addr,client_port,backend_start,query_start,wait_event_type,wait_event,state,query from pg_stat_activity where state != 'idle' and wait_event is not null ;
-
 begin
 open seq_cursor;
 loop
@@ -59,22 +55,21 @@ end if;
 end loop;
 close seq_cursor;
 end; $procedure$;
-
 ```
 
-Scheduling a cron job for a database:
+scheduling a cron job for a database:
 
 The metadata for pg_cron is all held in the PostgreSQL default database named postgres. Because background workers are used for running the maintenance cron jobs, you can schedule a job in any of your databases within the PostgreSQL DB instance:
 
 ```
-SELECT cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 * * * *', 'call public.pr_wait_evnt_mntrg()');
+select cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 * * * *', 'call public.pr_wait_evnt_mntrg()');
 ```
 
-As a user with the rds_superuser role, update the database column for the job that you just created so that it runs in another database within your PostgreSQL DB instance.
+As a rds_superuser role, update the database column for the job that you just created so that it runs in another database within your PostgreSQL DB instance.
 
 ```
 select * from cron.job;
-UPDATE cron.job SET database = 'datase_name' WHERE jobid = job_id;
+update cron.job SET database = 'datase_name' WHERE jobid = job_id;
 ```
 verify job details by below query
 ```
@@ -100,11 +95,11 @@ end; $procedure$;
 scheduling a cron job for purging the data on every sunday:
 
 ```
-SELECT cron.schedule('purging the data', '0 0 * * 0', 'call public.pr_wait_evnt_mntrg()');
+select cron.schedule('purging the data', '0 0 * * 0', 'call public.pr_wait_evnt_mntrg()');
 select * from cron.job; 
-UPDATE cron.job SET database = 'datase_name' WHERE jobid = job_id;
+update cron.job SET database = 'datase_name' WHERE jobid = job_id;
 ```
-Purging the pg_cron history table:
+purging the pg_cron history table:
 
 The cron.job_run_details table contains a history of cron jobs that can become very large over time. We recommend that you schedule a job that purges this table. For example, keeping a week's worth of entries might be sufficient for troubleshooting purposes.
 
