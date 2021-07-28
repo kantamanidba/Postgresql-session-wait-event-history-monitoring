@@ -1,6 +1,4 @@
-# RDS-Postgresql-session-wait-event-history-monitoring
-
-Postgresql session/wait event history monitoring:
+# RDS-Postgresql-session/wait-event-history-monitoring
 
 Below is the step by step procedure for session/wait event history monitoring@AWS PostgreSQL RDS.
 
