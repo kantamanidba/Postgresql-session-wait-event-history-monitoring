@@ -70,41 +70,44 @@ end; $procedure$;
 Scheduling a cron job for a database:
 
 The metadata for pg_cron is all held in the PostgreSQL default database named postgres. Because background workers are used for running the maintenance cron jobs, you can schedule a job in any of your databases within the PostgreSQL DB instance:
- 
-SELECT cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 * * * *', 'call public.pr_wait_evnt_mntrg()');
 
+```
+SELECT cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 * * * *', 'call public.pr_wait_evnt_mntrg()');
+```
 
 As a user with the rds_superuser role, update the database column for the job that you just created so that it runs in another database within your PostgreSQL DB instance.
 
+```
 UPDATE cron.job SET database = 'datase_name' WHERE jobid = job_id;
-
+```
 verify job details by below query
-
+```
 select * from cron.job;
-
+```
 verify failed jobs by below query 
-
+```
 select * from cron.job_run_details where status = 'failed';
-
-verify 	                
-purging the wait_evnt_mntrg_tbl
+```
+verify purging the wait_evnt_mntrg_tbl:
 
 In order to maintain storage consumption low it's better purge the history data weekly/bi-weekly.
 create the below procedure for purging the data.
 
+```
 create or replace procedure public.pr_wait_evnt_mntrg()
 LANGUAGE plpgsql
 AS $procedure$
 begin
 truncate table public.wait_evnt_mntrg_tbl;
 end; $procedure$;
-
+```
 scheduling a cron job for purging the data on every sunday:
 
+```
 SELECT cron.schedule('purging the data', '0 0 * * 0', 'call public.pr_wait_evnt_mntrg()');
 select * from cron.job; 
 UPDATE cron.job SET database = 'datase_name' WHERE jobid = job_id;
-
+```
 Purging the pg_cron history table:
 
 The cron.job_run_details table contains a history of cron jobs that can become very large over time. We recommend that you schedule a job that purges this table. For example, keeping a week's worth of entries might be sufficient for troubleshooting purposes.
