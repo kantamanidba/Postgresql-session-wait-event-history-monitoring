@@ -115,7 +115,5 @@ The cron.job_run_details table contains a history of cron jobs that can become v
 The following example uses the cron.schedule function to schedule a job that runs every day at midnight to purge the cron.job_run_details table. The job keeps only the last seven days. Use your rds_superuser account to schedule the job such as the following.
 
 ```
-SELECT cron.schedule('0 0 * * *', $$DELETE 
-    FROM cron.job_run_details 
-    WHERE end_time < now() – interval '7 days'$$);
+SELECT cron.schedule('0 0 * * *', $$DELETE FROM cron.job_run_details WHERE end_time < now() – interval '7 days'$$);
 ```
