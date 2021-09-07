@@ -8,6 +8,22 @@ Enable the pg_cron extension as follows:
 
 Modify the parameter group associated with your PostgreSQL DB instance and add pg_cron to the shared_preload_libraries parameter value. This change requires a PostgreSQL DB instance restart to take effect.
 
+```
+#Before parameter group change
+
+DB_NAME=> show shared_preload_libraries;
+          shared_preload_libraries
+---------------------------------------------
+ rdsutils,pg_stat_statements
+ 
+ #After parameter group change
+ 
+DB_NAME=> show shared_preload_libraries;
+          shared_preload_libraries
+---------------------------------------------
+ rdsutils,pg_stat_statements,pg_cron
+
+```
 after the PostgreSQL DB instance has restarted, run the following command using an account that has the rds_superuser permissions.
 
 ```
