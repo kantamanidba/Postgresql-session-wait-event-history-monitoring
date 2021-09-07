@@ -102,8 +102,10 @@ Verify/monitor the sessions/wait event data:
 ```
 ##Wait events and session details
 select * from public.wait_evnt_mntrg_tbl;
+
 ##Total wait_events and it's count
 select wait_evnt,count(wait_event) from public.wait_evnt_mntrg_tbl group by wait_evnt;
+
 ##Application wise wait_events
 select aplctn_name,count(wait_event) from public.wait_evnt_mntrg_tbl group by aplctn_name;
 ```
