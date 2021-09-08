@@ -130,7 +130,7 @@ scheduling a cron job for purging the data on every sunday:
 ```
 select cron.schedule('purging the data', '0 0 * * 0', 'call public.pr_wait_evnt_data_purging()');
 select * from cron.job; 
-update cron.job SET database = 'datase_name' WHERE jobid = job_id;
+update cron.job SET database = 'database_name' WHERE jobid = job_id;
 ```
 purging the pg_cron history table:
 
