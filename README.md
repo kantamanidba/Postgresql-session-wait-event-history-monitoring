@@ -78,7 +78,7 @@ scheduling a cron job for a database:
 The metadata for pg_cron is all held in the PostgreSQL default database named postgres. Because background workers are used for running the maintenance cron jobs, you can schedule a job in any of your databases within the PostgreSQL DB instance:
 
 ```
-##Example for every 5 mins
+##Example for every 5 mins, This frequency we can change as per our requirement either it for 10  mins or 5 mins or else for every 2 mins.
 select cron.schedule('Wait event Capture', '00,5,10,15,20,25,30,35,40,45,50,55 * * * *', 'call public.pr_wait_evnt_mntrg()');
 ```
 
