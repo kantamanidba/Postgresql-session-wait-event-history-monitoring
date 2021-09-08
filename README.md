@@ -108,6 +108,8 @@ select wait_evnt,count(wait_event) from public.wait_evnt_mntrg_tbl group by wait
 
 ##Application wise wait_events
 select aplctn_name,count(wait_event) from public.wait_evnt_mntrg_tbl group by aplctn_name;
+
+based on requirement we can play variety of queries on this table.
 ```
 
 purging the wait_evnt_mntrg_tbl:
