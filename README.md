@@ -86,7 +86,7 @@ As a rds_superuser role, update the database column for the job that you just cr
 
 ```
 select * from cron.job;
-update cron.job SET database = 'datbase_name' WHERE jobid = job_id;
+update cron.job SET database = 'database_name' WHERE jobid = job_id;
 ```
 verify job details by below query
 ```
